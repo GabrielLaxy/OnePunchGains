@@ -10,6 +10,9 @@ import {
   Montserrat_400Regular,
   Montserrat_800ExtraBold,
 } from '@expo-google-fonts/montserrat';
+import { enableScreens } from 'react-native-screens';
+
+enableScreens();
 
 SplashScreen.preventAutoHideAsync();
 
@@ -49,14 +52,14 @@ export default function App() {
   }
 
   return (
-    <View style={styles.teste} onLayout={onLayoutRootView}>
+    <View style={styles.container} onLayout={onLayoutRootView}>
       <Index />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  teste: {
+  container: {
     flex: 1,
   },
 });
