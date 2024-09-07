@@ -5,6 +5,7 @@ import {
 	ImageBackground,
 	Image,
 	TouchableOpacity,
+	StatusBar,
 } from 'react-native';
 import { OnePunch } from '../styles/OnePunch';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -29,6 +30,7 @@ interface EntradaProps {
 export default function Entrada({ navigation }: EntradaProps) {
 	return (
 		<View style={styles.container}>
+			<StatusBar animated={true} backgroundColor={OnePunch.backgroud}/>
 			<ImageBackground source={bg} resizeMode="cover" style={styles.bg}>
 				<View style={styles.top}>
 					<Image source={logo} style={styles.logo} />

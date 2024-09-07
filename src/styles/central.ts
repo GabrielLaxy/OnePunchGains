@@ -5,8 +5,11 @@ export const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		padding: 20,
+		backgroundColor:OnePunch.backgroud,
 	},
-	ImageBackground: {},
+	ImageBackground: {
+		
+	},
 	logo: {
 		height: 304 / 5.5,
 		width: 1558 / 5.5,

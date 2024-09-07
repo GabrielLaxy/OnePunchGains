@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View } from 'react-native';
-import { styles } from '../styles/treinos';
+import { Text, View, StatusBar } from 'react-native';
 import Checkbox from 'expo-checkbox';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { OnePunch } from '../styles/OnePunch';
+import { styles } from '../styles/treinos';
 
 type RootStackParamList = {
 	Entrada: undefined;
@@ -25,59 +25,41 @@ interface Treino1Props {
 }
 
 export default function Treino1({ navigation }: Treino1Props) {
-	const [checkedItems, setCheckedItems] = useState<boolean[]>(
-		Array(6).fill(false)
-	);
+	const [checkedItems, setCheckedItems] = useState<boolean[]>(Array(7).fill(false));
 
 	useEffect(() => {
 		const loadCheckedItems = async () => {
 			try {
-				const savedCheckedItems = await AsyncStorage.getItem(
-					'checkedItemsTreino1'
-				);
-				if (savedCheckedItems !== null) {
+				const savedCheckedItems = await AsyncStorage.getItem('checkedItemsTreino1');
+				if (savedCheckedItems) {
 					setCheckedItems(JSON.parse(savedCheckedItems));
 				}
 			} catch (error) {
-				console.error('Erro ao carregar os itens concluidos', error);
+				console.error('Erro ao carregar os itens concluídos', error);
 			}
 		};
-
 		loadCheckedItems();
 	}, []);
 
-	useEffect(() => {
-		const saveCheckedItems = async () => {
-			try {
-				await AsyncStorage.setItem(
-					'checkedItemsTreino1',
-					JSON.stringify(checkedItems)
-				);
-				await AsyncStorage.setItem(
-					'treino1Status',
-					JSON.stringify(checkedItems.every(item => item))
-				);
-			} catch (error) {
-				console.error('Erro ao salvar os itens concluidos', error);
-			}
-		};
-
-		saveCheckedItems();
-	}, [checkedItems]);
-
-	const toggleCheckbox = (index: number) => {
-		const newCheckedItems = [...checkedItems];
-		newCheckedItems[index] = !newCheckedItems[index];
-		setCheckedItems(newCheckedItems);
+	const handleCheckboxChange = async (index: number) => {
+		const updatedCheckedItems = [...checkedItems];
+		updatedCheckedItems[index] = !updatedCheckedItems[index];
+		setCheckedItems(updatedCheckedItems);
+		try {
+			await AsyncStorage.setItem('checkedItemsTreino1', JSON.stringify(updatedCheckedItems));
+		} catch (error) {
+			console.error('Erro ao salvar os itens concluídos', error);
+		}
 	};
 
 	return (
 		<View style={styles.container}>
+			<StatusBar animated={true} backgroundColor={OnePunch.backgroud}/>
 			<View style={styles.section}>
 				<Checkbox
 					style={styles.checkbox}
 					value={checkedItems[0]}
-					onValueChange={() => toggleCheckbox(0)}
+					onValueChange={() => handleCheckboxChange(0)}
 					color={checkedItems[0] ? OnePunch.saitamaOrange : undefined}
 				/>
 				<Text style={styles.paragraph}>Supino reto</Text>
@@ -86,7 +68,7 @@ export default function Treino1({ navigation }: Treino1Props) {
 				<Checkbox
 					style={styles.checkbox}
 					value={checkedItems[1]}
-					onValueChange={() => toggleCheckbox(1)}
+					onValueChange={() => handleCheckboxChange(1)}
 					color={checkedItems[1] ? OnePunch.saitamaOrange : undefined}
 				/>
 				<Text style={styles.paragraph}>Supino inclinado com halteres</Text>
@@ -95,7 +77,7 @@ export default function Treino1({ navigation }: Treino1Props) {
 				<Checkbox
 					style={styles.checkbox}
 					value={checkedItems[2]}
-					onValueChange={() => toggleCheckbox(2)}
+					onValueChange={() => handleCheckboxChange(2)}
 					color={checkedItems[2] ? OnePunch.saitamaOrange : undefined}
 				/>
 				<Text style={styles.paragraph}>Crucifixo máquina</Text>
@@ -104,7 +86,7 @@ export default function Treino1({ navigation }: Treino1Props) {
 				<Checkbox
 					style={styles.checkbox}
 					value={checkedItems[3]}
-					onValueChange={() => toggleCheckbox(3)}
+					onValueChange={() => handleCheckboxChange(3)}
 					color={checkedItems[3] ? OnePunch.saitamaOrange : undefined}
 				/>
 				<Text style={styles.paragraph}>Dips</Text>
@@ -113,7 +95,7 @@ export default function Treino1({ navigation }: Treino1Props) {
 				<Checkbox
 					style={styles.checkbox}
 					value={checkedItems[4]}
-					onValueChange={() => toggleCheckbox(4)}
+					onValueChange={() => handleCheckboxChange(4)}
 					color={checkedItems[4] ? OnePunch.saitamaOrange : undefined}
 				/>
 				<Text style={styles.paragraph}>Rosca scott</Text>
@@ -122,7 +104,7 @@ export default function Treino1({ navigation }: Treino1Props) {
 				<Checkbox
 					style={styles.checkbox}
 					value={checkedItems[5]}
-					onValueChange={() => toggleCheckbox(5)}
+					onValueChange={() => handleCheckboxChange(5)}
 					color={checkedItems[5] ? OnePunch.saitamaOrange : undefined}
 				/>
 				<Text style={styles.paragraph}>Rosca no banco inclinado</Text>
@@ -131,7 +113,7 @@ export default function Treino1({ navigation }: Treino1Props) {
 				<Checkbox
 					style={styles.checkbox}
 					value={checkedItems[6]}
-					onValueChange={() => toggleCheckbox(6)}
+					onValueChange={() => handleCheckboxChange(6)}
 					color={checkedItems[6] ? OnePunch.saitamaOrange : undefined}
 				/>
 				<Text style={styles.paragraph}>Rosca martelo</Text>

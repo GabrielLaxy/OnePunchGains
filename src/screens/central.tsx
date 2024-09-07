@@ -6,7 +6,9 @@ import {
 	ScrollView,
 	TouchableOpacity,
 	ImageBackground,
+	StatusBar,
 } from 'react-native';
+import { OnePunch } from '../styles/OnePunch';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useIsFocused } from '@react-navigation/native';
 import { styles } from '../styles/central';
@@ -45,6 +47,16 @@ const getStatus = (checkedItems: boolean[]) => {
 		return 'Treinando';
 	} else {
 		return 'Faltante';
+	}
+};
+
+const getStatusColor = (status: string) => {
+	if (status === 'Concluído💪🏼') {
+		return OnePunch.text;
+	} else if (status === 'Treinando') {
+		return OnePunch.secondaryText;
+	} else {
+		return OnePunch.intenseRed;
 	}
 };
 
@@ -130,7 +142,8 @@ export default function Central({ navigation }: CentralProps) {
 
 	return (
 		<ScrollView contentContainerStyle={{ flexGrow: 1 }} overScrollMode="never">
-			<ImageBackground style={styles.ImageBackground} source={background}>
+			<StatusBar animated={true} backgroundColor={OnePunch.backgroud} />
+			{/* <ImageBackground style={styles.ImageBackground} source={background}> */}
 				<View style={styles.container}>
 					<Image source={logo} style={styles.logo} />
 					<View style={styles.helloContainer}>
@@ -156,7 +169,14 @@ export default function Central({ navigation }: CentralProps) {
 									</View>
 									<View style={styles.subtitleContainer}>
 										<Text style={styles.subtitle}>Status</Text>
-										<Text style={styles.status}>{statusTreino1}</Text>
+										<Text
+											style={[
+												styles.status,
+												{ color: getStatusColor(statusTreino1) },
+											]}
+										>
+											{statusTreino1}
+										</Text>
 									</View>
 								</TouchableOpacity>
 								<TouchableOpacity
@@ -168,7 +188,14 @@ export default function Central({ navigation }: CentralProps) {
 									</View>
 									<View style={styles.subtitleContainer}>
 										<Text style={styles.subtitle}>Status</Text>
-										<Text style={styles.status}>{statusTreino2}</Text>
+										<Text
+											style={[
+												styles.status,
+												{ color: getStatusColor(statusTreino2) },
+											]}
+										>
+											{statusTreino2}
+										</Text>
 									</View>
 								</TouchableOpacity>
 							</View>
@@ -182,7 +209,14 @@ export default function Central({ navigation }: CentralProps) {
 									</View>
 									<View style={styles.subtitleContainer}>
 										<Text style={styles.subtitle}>Status</Text>
-										<Text style={styles.status}>{statusTreino3}</Text>
+										<Text
+											style={[
+												styles.status,
+												{ color: getStatusColor(statusTreino3) },
+											]}
+										>
+											{statusTreino3}
+										</Text>
 									</View>
 								</TouchableOpacity>
 								<TouchableOpacity
@@ -194,7 +228,14 @@ export default function Central({ navigation }: CentralProps) {
 									</View>
 									<View style={styles.subtitleContainer}>
 										<Text style={styles.subtitle}>Status</Text>
-										<Text style={styles.status}>{statusTreino4}</Text>
+										<Text
+											style={[
+												styles.status,
+												{ color: getStatusColor(statusTreino4) },
+											]}
+										>
+											{statusTreino4}
+										</Text>
 									</View>
 								</TouchableOpacity>
 							</View>
@@ -212,7 +253,7 @@ export default function Central({ navigation }: CentralProps) {
 						</View>
 					</TouchableOpacity>
 				</View>
-			</ImageBackground>
+			{/* </ImageBackground> */}
 		</ScrollView>
 	);
 }
